@@ -1,0 +1,112 @@
+##grflangid 0x01
+# This is the English language file
+
+# GRF name and description definitions
+STR_GRF_NAME        :{TITLE} {VERSION}
+STR_GRF_DESCRIPTION :Art: Uzurpator{}Code: PikkaBird & Death{}NML: Longtomjr
+
+# vehicle names
+
+# Steam
+str_steam_ED1          :ED1  2-6-2T (Steam)
+str_steam_ED1_add      :Suitable for: {GOLD}General Purpose{}{BLACK}Builder: {GOLD}Vulcan Foundry{}{BLACK}Country: {GOLD}Rhodesia
+
+str_steam_Class11B     :Class 11B (Steam)
+str_steam_Class11B_add :Suitable for: {GOLD}General Purpose{}{BLACK}Builder: {GOLD}Beyer Peacock{}{BLACK}Country: {GOLD}Argentina
+
+str_steam_Class12A     :Class 12A (Steam)
+str_steam_Class12A_add :Suitable for: {GOLD}General Purpose{}{BLACK}Builder: {GOLD}Beyer Peacock{}{BLACK}Country: {GOLD}Argentina
+
+str_steam_Class10A     :Class 10A (Steam)
+str_steam_Class10A_add :Suitable for: {GOLD}Heavy Freight{}{BLACK}Builder: {GOLD}Beyer Peacock{}{BLACK}Country: {GOLD}Angola
+
+str_steam_Class12L     :Class 12L 'Caprotti' (Steam)
+str_steam_Class12L_add :Suitable for: {GOLD}Express{}{BLACK}Builder: {GOLD}Vulcan Foundry{}{BLACK}Country: {GOLD}Argentina
+
+str_steam_Class19D     :Class 19D (Steam)
+str_steam_Class19D_add :Suitable for: {GOLD}Freight{}{BLACK}Builder: {GOLD}Borsig{}{BLACK}Country: {GOLD}South Africa
+
+str_steam_Class15A     :Class 15A (Steam)
+str_steam_Class15A_add :Suitable for: {GOLD}Heavy Freight{}{BLACK}Builder: {GOLD}Beyer Peacock{}{BLACK}Country: {GOLD}Rhodesia
+
+str_steam_Class25C     :Class 25C (Steam)
+str_steam_Class25C_add :Suitable for: {GOLD}General Purpose{}{BLACK}Builder: {GOLD}Henschel{}{BLACK}Country: {GOLD}South Africa
+
+str_steam_GMAM         :GMAM (Steam)
+str_steam_GMAM_add     :Suitable for: {GOLD}Heavy Freight{}{BLACK}Builder: {GOLD}Beyer Peacock{}{BLACK}Country: {GOLD}South Africa
+
+str_steam_Class26      :Class 26 'Red Devil' (Steam)
+str_steam_Class26_add  :Suitable for: {GOLD}General Purpose{}{BLACK}Builder: {GOLD}David Wardale{}{BLACK}Country: {GOLD}South Africa
+
+
+# Diesel
+str_diesel_RMd55          :RMd 55 (Diesel)
+str_diesel_RMd55_add      :Suitable for: {GOLD}Local Passenger{}{BLACK}Builder: {GOLD}QR{}{BLACK}Country: {GOLD}Australia
+
+str_diesel_DE2            :DE2 (Diesel)
+str_diesel_DE2_add        :Suitable for: {GOLD}General Purpose{}{BLACK}Builder: {GOLD}English Electric{}{BLACK}Country: {GOLD}Rhodesia
+
+str_diesel_RF615E         :RF 615-E (Diesel)
+str_diesel_RF615E_add     :Suitable for: {GOLD}Freight{}{BLACK}Builder: {GOLD}Baldwin-Lima-Hamilton{}{BLACK}Country: {GOLD}Argentina
+
+str_diesel_Class44        :Class 44 (Diesel)
+str_diesel_Class44_add    :Suitable for: {GOLD}Freight{}{BLACK}Builder: {GOLD}A E Goodwin{}{BLACK}Country: {GOLD}Australia
+
+str_diesel_WDM2           :WDM-2 (Diesel)
+str_diesel_WDM2_add       :Suitable for: {GOLD}General Purpose{}{BLACK}Builder: {GOLD}Alco{}{BLACK}Country: {GOLD}India
+
+str_diesel_Century628     :Century 628 (Diesel)
+str_diesel_Century628_add :Suitable for: {GOLD}Heavy Freight{}{BLACK}Builder: {GOLD}Alco{}{BLACK}Country: {GOLD}Australia
+
+str_diesel_LClass         :L Class (Diesel)
+str_diesel_LClass_add     :Suitable for: {GOLD}Express{}{BLACK}Builder: {GOLD}Clyde Engineering{}{BLACK}Country: {GOLD}Australia
+
+str_diesel_DLClass        :DL Class (Diesel)
+str_diesel_DLClass_add    :Suitable for: {GOLD}Express{}{BLACK}Builder: {GOLD}Clyde Engineering{}{BLACK}Country: {GOLD}Australia
+
+str_diesel_Class34        :Class 34 (Diesel)
+str_diesel_Class34_add    :Suitable for: {GOLD}Freight{}{BLACK}Builder: {GOLD}General Electric{}{BLACK}Country: {GOLD}South Africa
+
+str_diesel_BB409W         :BB40-9W (Diesel)
+str_diesel_BB409W_add     :Suitable for: {GOLD}Heavy Freight{}{BLACK}Builder: {GOLD}General Electric{}{BLACK}Country: {GOLD}Brazil
+
+str_diesel_DE43CAC        :DE43CAC (Diesel)
+str_diesel_DE43CAC_add    :Suitable for: {GOLD}Express{}{BLACK}Builder: {GOLD}Alstom{}{BLACK}Country: {GOLD}Iran
+
+str_diesel_FQClass        :FQ Class (Diesel)
+str_diesel_FQClass_add    :Suitable for: {GOLD}Freight{}{BLACK}Builder: {GOLD}EDI Rail{}{BLACK}Country: {GOLD}Australia
+
+str_diesel_DDM45          :DDM45 (Diesel)
+str_diesel_DDM45_add      :Suitable for: {GOLD}Heavy Freight{}{BLACK}Builder: {GOLD}EMD{}{BLACK}Country: {GOLD}Brazil
+
+str_diesel_BLClass        :BL Class (Diesel)
+str_diesel_BLClass_add    :Suitable for: {GOLD}Freight{}{BLACK}Builder: {GOLD}Clyde Engineering{}{BLACK}Country: {GOLD}Australia
+
+### Electric
+
+str_electric_WCM1          :WCM-1 (Electric)
+str_electric_WCM1_add      :Suitable for: {GOLD}General Purpose{}{BLACK}Builder: {GOLD}English Electric{}{BLACK}Country: {GOLD}India
+
+str_electric_WAM1          :WAM-1 (Electric)
+str_electric_WAM1_add      :Suitable for: {GOLD}Express{}{BLACK}Builder: {GOLD}50 Cycles European Group{}{BLACK}Country: {GOLD}India
+
+str_electric_Class6E       :Class 6E (Electric)
+str_electric_Class6E_add   :Suitable for: {GOLD}General Purpose{}{BLACK}Builder: {GOLD}Union Carriage & Wagon{}{BLACK}Country: {GOLD}South Africa
+
+str_electric_WAM4          :WAM-4 (Electric)
+str_electric_WAM4_add      :Suitable for: {GOLD}Freight{}{BLACK}Builder: {GOLD}Chittaranjan Locomotive Works{}{BLACK}Country: {GOLD}India
+
+str_electric_Class1100     :Class 1100 (Electric)
+str_electric_Class1100_add :Suitable for: {GOLD}General Purpose{}{BLACK}Builder: {GOLD}Hitachi{}{BLACK}Country: {GOLD}Morocco
+
+str_electric_Class9E       :Class 9E (Electric)
+str_electric_Class9E_add   :Suitable for: {GOLD}Heavy Freight{}{BLACK}Builder: {GOLD}Union Carriage & Wagon{}{BLACK}Country: {GOLD}South Africa
+
+str_electric_Class10E      :Class 10E (Electric)
+str_electric_Class10E_add  :Suitable for: {GOLD}General Purpose{}{BLACK}Builder: {GOLD}Union Carriage & Wagon{}{BLACK}Country: {GOLD}South Africa
+
+str_electric_WAP4          :WAP-4 (Electric)
+str_electric_WAP4_add      :Suitable for: {GOLD}Express{}{BLACK}Builder: {GOLD}Chittaranjan Locomotive Works{}{BLACK}Country: {GOLD}India
+
+str_electric_WAG6C         :WAG-6C (Electric)
+str_electric_WAG6C_add     :Suitable for: {GOLD}Heavy Freight{}{BLACK}Builder: {GOLD}Hitachi{}{BLACK}Country: {GOLD}India

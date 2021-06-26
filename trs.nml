@@ -1,0 +1,2567 @@
+grf {
+    grfid: "HE\01\02";
+    name: string(STR_GRF_NAME);
+    desc: string(STR_GRF_DESCRIPTION);
+    version: 0;
+    min_compatible_version: 0;
+}
+
+// expression: global_var[0x8E] = 0x00000002;
+traininfo_y_offset = 2;
+// expression: global_var[0x9E] = global_var[0x9E] | 0x0000000A;
+train_width_32_px = 1;
+
+// current_palette = PALETTE_WIN;
+
+railtypetable {
+    meter_A: [nAAN, NAAN, RAIL],
+
+    cape_A: [NAAN, RAIL],
+    dc_3kv_cape_A: [NAAD, NAAE, SAAD, SAAE, ELRL],
+    ac_25kv_cape_A: [NAAa, NAAA, NAAE, SAAa, SAAA, SAAE, ELRL],
+    ac_50kv_cape_A: [NAAA, NAAE, SAAA, SAAE, ELRL],
+
+    indian_A: [bAAN, BAAN, RAIL],
+    dc_1500v_indian_A: [BAAd, BAAD, BAAE, SAAd, SAAD, SAAE, ELRL],
+    ac_25kv_indian_A: [BAAA, BAAE, BAAD, SAAA, SAAE, ELRL],
+
+    standard_A: [SAAN, RAIL],
+    dc_3kv_standard_A: [SAAD, SAAE, ELRL],
+}
+
+cargotable {
+    PASS, MAIL, GOOD, COAL
+}
+
+
+switch(FEAT_TRAINS, SELF, switch_steam_generic_sound, getbits(extra_callback_info1, 0, 8)) {
+    SOUND_EVENT_START: sound("sfx/qr_whistle.wav");
+    SOUND_EVENT_TUNNEL: sound("sfx/qr_whistle.wav");
+}
+
+switch(FEAT_TRAINS, SELF, switch_diesel_1250_sound, getbits(extra_callback_info1, 0, 8)) {
+    SOUND_EVENT_START: sound("sfx/1250_horn.wav");
+    SOUND_EVENT_TUNNEL: sound("sfx/1250_horn.wav");
+}
+
+switch(FEAT_TRAINS, SELF, switch_diesel_1460_sound, getbits(extra_callback_info1, 0, 8)) {
+    SOUND_EVENT_START: sound("sfx/1460_horn.wav");
+    SOUND_EVENT_TUNNEL: sound("sfx/1460_horn.wav");
+}
+
+switch(FEAT_TRAINS, SELF, switch_diesel_us_sound, getbits(extra_callback_info1, 0, 8)) {
+    SOUND_EVENT_START: sound("sfx/us_diesel_2_short.wav");
+    SOUND_EVENT_TUNNEL: sound("sfx/us_diesel_2_short.wav");
+}
+
+// Steam
+
+// ED1
+
+spriteset (spriteset_steam_ED1, "sprites.png") {
+    // A4
+    [10, 10, 8, 22, -3, -12]
+    // A5
+    [28, 10, 20, 18, -12, -11]
+    // A6
+    [58, 10, 28, 13, -12, -9]
+    // A7
+    [96, 10, 20, 18, -4, -10]
+    // A8
+    [126, 10, 8, 22, -3, -10]
+    // A9
+    [144, 10, 20, 18, -14, -10]
+    // AA
+    [174, 10, 28, 13, -16, -9]
+    // AB
+    [212, 10, 20, 18, -6, -11]
+}
+
+spriteset (spriteset_steam_ED1_flipped, "sprites.png") {
+    // AC
+    [242, 10, 8, 22, -3, -10]
+    // AD
+    [260, 10, 20, 18, -14, -10]
+    // AE
+    [290, 10, 28, 13, -16, -9]
+    // AF
+    [328, 10, 20, 18, -6, -11]
+    // B0
+    [358, 10, 8, 22, -3, -12]
+    // B1
+    [376, 10, 20, 18, -12, -11]
+    // B2
+    [406, 10, 28, 13, -12, -9]
+    // B3
+    [444, 10, 20, 18, -4, -10]
+}
+
+spriteset (spriteset_steam_ED1_purchase, "sprites.png") {
+    // 0B7
+    [474, 10, 28, 13, -14, -9]
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_ED1_flipped, vehicle_is_flipped) {
+    1: spriteset_steam_ED1_flipped;
+    return spriteset_steam_ED1;
+}
+
+item (FEAT_TRAINS, item_steam_ED1) {
+    property {
+        name: string(str_steam_ED1);
+        // from yagl
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1920, 01, 01);
+        reliability_decay: 20;
+        vehicle_life: 40;
+        model_life: 20;
+        running_cost_factor: 19;
+        cost_factor: 4;
+        engine_class: ENGINE_CLASS_STEAM;
+        speed: 64 km/h;
+        weight: 50 tons;
+        power: 600;
+        // coeff_of_tractive_effort: 0x24;
+        tractive_effort_coefficient: 0.14;
+        // miscellaneous_flags: 0x02;
+        misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_FLIP);
+        // shorten_vehicle: 0x01;
+        length: 7;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        // track_type: 0;
+        track_type: meter_A;
+        climates_available: ALL_CLIMATES;
+        // is_dual_headed: false;
+        dual_headed: 0;
+        cargo_capacity: 0;
+        // cargo_type: 0x00;
+    }
+    graphics {
+        default: switch_steam_ED1_flipped;
+        additional_text: string(str_steam_ED1_add);
+        sound_effect: switch_steam_generic_sound;
+        purchase: spriteset_steam_ED1_purchase;
+    }
+}
+
+// END ED1
+
+// START C11B
+
+spriteset (spriteset_steam_Class11B, "sprites.png") {
+    // C2
+    [512, 10, 8, 22, -3, -12]
+    // C3
+    [530, 10, 20, 18, -12, -11]
+    // C4
+    [560, 10, 28, 13, -12, -9]
+    // C5
+    [598, 10, 20, 18, -4, -10]
+    // C6
+    [628, 10, 8, 22, -3, -10]
+    // C7
+    [646, 10, 20, 18, -14, -10]
+    // C8
+    [676, 10, 28, 13, -16, -9]
+    // C9
+    [714, 10, 20, 18, -6, -11]
+}
+
+spriteset (spriteset_steam_tender_1, "sprites.png") {
+    // CA
+    [744, 10, 8, 18, -3, -13]
+    // CB
+    [762, 10, 20, 16, -11, -10]
+    // CC
+    [10, 42, 28, 12, -9, -8]
+    // CD
+    [48, 42, 20, 16, -1, -7]
+    // CE
+    [78, 42, 8, 18, -3, -7]
+    // CF
+    [96, 42, 20, 16, -17, -7]
+    // D0
+    [126, 42, 28, 12, -19, -8]
+    // D1
+    [164, 42, 20, 16, -7, -10]
+}
+
+spriteset (spriteset_steam_Class11B_purchase, "sprites.png") {
+    // D6
+    [194, 42, 48, 12, -24, -8]
+}
+
+switch (FEAT_TRAINS, SELF, switch_steam_Class11B_articulated, extra_callback_info1) {
+    1: return item_steam_Class11B;
+    return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class11B_position, (position_in_vehid_chain % 2)) {
+    1: spriteset_steam_tender_1;
+    return spriteset_steam_Class11B;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class11B_length, (position_in_vehid_chain % 2)) {
+    1: return 4;
+    return 7;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class11B_visual_effect_and_powered, (position_in_vehid_chain % 2)) {
+    1: return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+    return visual_effect_and_powered(VISUAL_EFFECT_STEAM, -3, DISABLE_WAGON_POWER);
+}
+
+item (FEAT_TRAINS, item_steam_Class11B) {
+    property {
+        name: string(str_steam_Class11B);
+        // from yagl
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1920, 01, 01);
+        reliability_decay: 20;
+        vehicle_life: 40;
+        model_life: 20;
+        running_cost_factor: 25;
+        cost_factor: 6;
+        engine_class: ENGINE_CLASS_STEAM;
+        speed: 64 km/h;
+        weight: 97 tons;
+        power: 930;
+        // coeff_of_tractive_effort: 0x1C;
+        tractive_effort_coefficient: 0.109;
+        // miscellaneous_flags: 0x02;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        // shorten_vehicle: 0x01;
+        length: 7;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        // track_type: 0;
+        track_type: indian_A;
+        climates_available: ALL_CLIMATES;
+        // is_dual_headed: false;
+        dual_headed: 0;
+        cargo_capacity: 0;
+        // cargo_type: 0x00;
+    }
+    graphics {
+        default: switch_steam_Class11B_position;
+        articulated_part: switch_steam_Class11B_articulated;
+        length: switch_steam_Class11B_length;
+
+        visual_effect_and_powered: switch_steam_Class11B_visual_effect_and_powered;
+        purchase: spriteset_steam_Class11B_purchase;
+        additional_text: string(str_steam_Class11B_add);
+
+        sound_effect: switch_steam_generic_sound;
+    }
+}
+
+
+spriteset (spriteset_steam_Class12A, "sprites.png") {
+    // E2
+    [252, 42, 8, 22, -3, -12]
+    // E3
+    [270, 42, 20, 18, -12, -11]
+    // E4
+    [300, 42, 28, 13, -12, -9]
+    // E5
+    [338, 42, 20, 18, -4, -10]
+    // E6
+    [368, 42, 8, 22, -3, -10]
+    // E7
+    [386, 42, 20, 18, -14, -10]
+    // E8
+    [416, 42, 28, 13, -16, -9]
+    // E9
+    [454, 42, 20, 18, -6, -11]
+}
+spriteset (spriteset_steam_Class12A_purchase, "sprites.png") {
+    // EC
+    [484, 42, 48, 12, -24, -8]
+}
+
+switch (FEAT_TRAINS, SELF, switch_steam_Class12A_articulated, extra_callback_info1) {
+    1: return item_steam_Class12A;
+    return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class12A_position, (position_in_vehid_chain % 2)) {
+    1: spriteset_steam_tender_1;
+    return spriteset_steam_Class12A;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class12A_length, (position_in_vehid_chain % 2)) {
+    1: return 4;
+    return 7;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class12A_visual_effect_and_powered, (position_in_vehid_chain % 2)) {
+    1: return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+    return visual_effect_and_powered(VISUAL_EFFECT_STEAM, -3, DISABLE_WAGON_POWER);
+}
+
+item (FEAT_TRAINS, item_steam_Class12A) {
+    property {
+        name: string(str_steam_Class12A);
+        // from yagl
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1924, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 40;
+        model_life: 20;
+        running_cost_factor: 31;
+        cost_factor: 7;
+        engine_class: ENGINE_CLASS_STEAM;
+        speed: 80 km/h;
+        weight: 104 tons;
+        power: 1200;
+        // coeff_of_tractive_effort: 0x18;
+        tractive_effort_coefficient: 0.094;
+        // miscellaneous_flags: 0x02;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        // shorten_vehicle: 0x01;
+        length: 7;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        // track_type: 0;
+        track_type: indian_A;
+        climates_available: ALL_CLIMATES;
+        // is_dual_headed: false;
+        dual_headed: 0;
+        cargo_capacity: 0;
+        // cargo_type: 0x00;
+    }
+    graphics {
+        default: switch_steam_Class12A_position;
+        articulated_part: switch_steam_Class12A_articulated;
+        length: switch_steam_Class12A_length;
+
+        visual_effect_and_powered: switch_steam_Class12A_visual_effect_and_powered;
+        purchase: spriteset_steam_Class12A_purchase;
+        additional_text: string(str_steam_Class12A_add);
+
+        sound_effect: switch_steam_generic_sound;
+    }
+}
+
+// Class10A
+
+spriteset (spriteset_steam_Class10A_front, "sprites.png") {
+    // 0F8
+    [542, 42, 8, 22, -3, -12]
+    // 0F9
+    [560, 42, 20, 18, -12, -11]
+    // 0FA
+    [590, 42, 28, 13, -12, -9]
+    // 0FB
+    [628, 42, 20, 18, -4, -10]
+    // 0FC
+    [658, 42, 8, 22, -3, -10]
+    // 0FD
+    [676, 42, 20, 18, -14, -10]
+    // 0FE
+    [706, 42, 28, 13, -16, -9]
+    // 0FF
+    [744, 42, 20, 18, -6, -11]
+}
+
+spriteset (spriteset_steam_Class10A_middle, "sprites.png") {
+    // 100
+    [774, 42, 8, 20, -3, -14]
+    // 101
+    [10, 74, 21, 16, -11, -10]
+    // 102
+    [41, 74, 29, 12, -9, -8]
+    // 103
+    [80, 74, 22, 16, -3, -7]
+    // 104
+    [112, 74, 8, 20, -3, -8]
+    // 105
+    [130, 74, 22, 16, -17, -7]
+    // 106
+    [162, 74, 29, 12, -20, -8]
+    // 107
+    [201, 74, 21, 16, -8, -10]
+}
+
+spriteset (spriteset_steam_Class10A_rear, "sprites.png") {
+    // 108
+    [232, 74, 8, 22, -3, -12]
+    // 109
+    [250, 74, 20, 18, -12, -11]
+    // 10A
+    [280, 74, 28, 13, -12, -9]
+    // 10B
+    [318, 74, 20, 18, -4, -10]
+    // 10C
+    [348, 74, 8, 22, -3, -10]
+    // 10D
+    [366, 74, 20, 18, -14, -10]
+    // 10E
+    [396, 74, 28, 13, -16, -9]
+    // 10F
+    [434, 74, 20, 18, -6, -11]
+}
+
+spriteset (spriteset_steam_Class10A_purchase, "sprites.png") {
+    // 119
+    [464, 74, 76, 12, -28, -8]
+}
+
+switch (FEAT_TRAINS, SELF, switch_steam_Class10A_articulated, extra_callback_info1) {
+    1: item_steam_Class10A;
+    2: item_steam_Class10A;
+    return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class10A_position, position_in_articulated_veh) {
+    0: spriteset_steam_Class10A_front;
+    2: spriteset_steam_Class10A_rear;
+    return spriteset_steam_Class10A_middle;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class10A_length, position_in_articulated_veh) {
+    0: return 7;
+    2: return 7;
+    return 5;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class10A_visual_effect_and_powered, position_in_articulated_veh) {
+    1: visual_effect_and_powered(VISUAL_EFFECT_STEAM, -3, DISABLE_WAGON_POWER);
+    return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+}
+
+item (FEAT_TRAINS, item_steam_Class10A) {
+    property {
+        name: string(str_steam_Class10A);
+        // from yagl
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1930, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 40;
+        model_life: 20;
+        running_cost_factor: 41;
+        cost_factor: 15;
+        engine_class: ENGINE_CLASS_STEAM;
+        speed: 72 km/h;
+        weight: 161 tons;
+        power: 1930;
+        // coeff_of_tractive_effort: 0x29;
+        tractive_effort_coefficient: 0.16;
+        // miscellaneous_flags: 0x02;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        // shorten_vehicle: 0x01;
+        length: 7;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        // track_type: 0;
+        track_type: cape_A;
+        climates_available: ALL_CLIMATES;
+        // is_dual_headed: false;
+        dual_headed: 0;
+        cargo_capacity: 0;
+        // cargo_type: 0x00;
+    }
+    graphics {
+        default: switch_steam_Class10A_position;
+        articulated_part: switch_steam_Class10A_articulated;
+        length: switch_steam_Class10A_length;
+
+        visual_effect_and_powered: switch_steam_Class10A_visual_effect_and_powered;
+        purchase: spriteset_steam_Class10A_purchase;
+        additional_text: string(str_steam_Class10A_add);
+
+        sound_effect: switch_steam_generic_sound;
+    }
+}
+
+// Caprotti
+
+spriteset (spriteset_steam_Class12L, "sprites.png") {
+    // 124
+    [550, 74, 8, 24, -3, -12]
+    // 125
+    [568, 74, 22, 18, -15, -9]
+    // 126
+    [600, 74, 32, 12, -16, -8]
+    // 127
+    [642, 74, 22, 17, -6, -9]
+    // 128
+    [674, 74, 8, 24, -3, -12]
+    // 129
+    [692, 74, 22, 17, -14, -9]
+    // 12A
+    [724, 74, 32, 12, -16, -8]
+    // 12B
+    [766, 74, 22, 18, -6, -9]
+}
+
+spriteset (spriteset_steam_Class12L_purchase, "sprites.png") {
+    // 12E
+    [10, 108, 48, 12, -24, -8]
+}
+
+
+switch (FEAT_TRAINS, SELF, switch_steam_Class12L_articulated, extra_callback_info1) {
+    1: item_steam_Class12L;
+    return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class12L_position, position_in_articulated_veh) {
+    1: spriteset_steam_tender_1;
+    return spriteset_steam_Class12L;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class12L_length, position_in_articulated_veh) {
+    1: return 4;
+    return 8;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class12L_visual_effect_and_powered, position_in_articulated_veh) {
+    1: visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+    return visual_effect_and_powered(VISUAL_EFFECT_STEAM, -3, DISABLE_WAGON_POWER);
+}
+
+item (FEAT_TRAINS, item_steam_Class12L) {
+    property {
+        name: string(str_steam_Class12L);
+        // from yagl
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1934, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 40;
+        model_life: 20;
+        running_cost_factor: 49;
+        cost_factor: 12;
+        engine_class: ENGINE_CLASS_STEAM;
+        speed: 130 km/h;
+        weight: 142 tons;
+        power: 1500;
+        // coeff_of_tractive_effort: 0x29;
+        tractive_effort_coefficient: 0.07;
+        // miscellaneous_flags: 0x02;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        // shorten_vehicle: 0x00;
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        // track_type: 0;
+        track_type: indian_A;
+        climates_available: ALL_CLIMATES;
+        // is_dual_headed: false;
+        dual_headed: 0;
+        cargo_capacity: 0;
+        // cargo_type: 0x00;
+    }
+    graphics {
+        default: switch_steam_Class12L_position;
+        articulated_part: switch_steam_Class12L_articulated;
+        length: switch_steam_Class12L_length;
+
+        visual_effect_and_powered: switch_steam_Class12L_visual_effect_and_powered;
+        purchase: spriteset_steam_Class12L_purchase;
+        additional_text: string(str_steam_Class12L_add);
+
+        sound_effect: switch_steam_generic_sound;
+    }
+}
+
+// Class 19D
+
+spriteset(spriteset_steam_Class19D, "sprites.png") {
+    // 13A
+    [68, 108, 8, 24, -3, -12]
+    // 13B
+    [86, 108, 22, 18, -15, -9]
+    // 13C
+    [118, 108, 32, 12, -16, -8]
+    // 13D
+    [160, 108, 22, 17, -6, -9]
+    // 13E
+    [192, 108, 8, 24, -3, -12]
+    // 13F
+    [210, 108, 22, 17, -14, -9]
+    // 140
+    [242, 108, 32, 12, -16, -8]
+    // 141
+    [284, 108, 22, 18, -6, -9]
+}
+
+spriteset(spriteset_steam_Class19D_purchase, "sprites.png") {
+    // 144
+    [316, 108, 48, 12, -24, -8]
+}
+
+
+switch (FEAT_TRAINS, SELF, switch_steam_Class19D_articulated, extra_callback_info1) {
+    1: item_steam_Class19D;
+    return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class19D_position, position_in_articulated_veh) {
+    1: spriteset_steam_tender_1;
+    return spriteset_steam_Class19D;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class19D_length, position_in_articulated_veh) {
+    1: return 4;
+    return 8;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class19D_visual_effect_and_powered, position_in_articulated_veh) {
+    1: visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+    return visual_effect_and_powered(VISUAL_EFFECT_STEAM, -3, DISABLE_WAGON_POWER);
+}
+
+item (FEAT_TRAINS, item_steam_Class19D) {
+    property {
+        name: string(str_steam_Class19D);
+        // from yagl
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1936, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 40;
+        model_life: 20;
+        running_cost_factor: 42;
+        cost_factor: 9;
+        engine_class: ENGINE_CLASS_STEAM;
+        speed: 104 km/h;
+        weight: 119 tons;
+        power: 1600;
+        // coeff_of_tractive_effort: 0x1B;
+        tractive_effort_coefficient: 0.105;
+        // miscellaneous_flags: 0x02;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        // shorten_vehicle: 0x00;
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        // track_type: 0;
+        track_type: cape_A;
+        climates_available: ALL_CLIMATES;
+        // is_dual_headed: false;
+        dual_headed: 0;
+        cargo_capacity: 0;
+        // cargo_type: 0x00;
+    }
+    graphics {
+        default: switch_steam_Class19D_position;
+        articulated_part: switch_steam_Class19D_articulated;
+        length: switch_steam_Class19D_length;
+
+        visual_effect_and_powered: switch_steam_Class19D_visual_effect_and_powered;
+        purchase: spriteset_steam_Class19D_purchase;
+        additional_text: string(str_steam_Class19D_add);
+
+        sound_effect: switch_steam_generic_sound;
+    }
+}
+
+
+// Class15A
+
+spriteset (spriteset_steam_Class15A_front, "sprites.png") {
+    // 150
+    [374, 108, 8, 22, -3, -12]
+    // 151
+    [392, 108, 20, 18, -12, -11]
+    // 152
+    [422, 108, 28, 13, -12, -9]
+    // 153
+    [460, 108, 20, 18, -4, -10]
+    // 154
+    [490, 108, 8, 22, -3, -10]
+    // 155
+    [508, 108, 20, 18, -14, -10]
+    // 156
+    [538, 108, 28, 13, -17, -9]
+    // 157
+    [576, 108, 20, 18, -6, -11]
+}
+
+spriteset (spriteset_steam_Class15A_rear, "sprites.png") {
+    // 158
+    [606, 108, 8, 22, -3, -12]
+    // 159
+    [624, 108, 20, 18, -12, -11]
+    // 15A
+    [654, 108, 28, 13, -9, -9]
+    // 15B
+    [692, 108, 20, 18, -4, -10]
+    // 15C
+    [722, 108, 8, 22, -3, -10]
+    // 15D
+    [740, 108, 20, 18, -14, -10]
+    // 15E
+    [10, 142, 28, 13, -20, -9]
+    // 15F
+    [48, 142, 20, 18, -6, -11]
+}
+
+spriteset (spriteset_steam_Class15A_purchase, "sprites.png") {
+    // 166
+    [78, 142, 76, 12, -28, -8]
+}
+
+switch (FEAT_TRAINS, SELF, switch_steam_Class15A_articulated, extra_callback_info1) {
+    1: item_steam_Class15A;
+    2: item_steam_Class15A;
+    return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class15A_position, position_in_articulated_veh) {
+    0: spriteset_steam_Class15A_front;
+    2: spriteset_steam_Class15A_rear;
+    return spriteset_steam_Class10A_middle;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class15A_length, position_in_articulated_veh) {
+    0: return 6;
+    2: return 6;
+    return 5;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class15A_visual_effect_and_powered, position_in_articulated_veh) {
+    1: visual_effect_and_powered(VISUAL_EFFECT_STEAM, -3, DISABLE_WAGON_POWER);
+    return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+}
+
+item (FEAT_TRAINS, item_steam_Class15A) {
+    property {
+        name: string(str_steam_Class15A);
+        // from yagl
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1941, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 40;
+        model_life: 20;
+        running_cost_factor: 68;
+        cost_factor: 20;
+        engine_class: ENGINE_CLASS_STEAM;
+        speed: 104 km/h;
+        weight: 187 tons;
+        power: 2110;
+        // coeff_of_tractive_effort: 0x24;
+        tractive_effort_coefficient: 0.141;
+        // miscellaneous_flags: 0x02;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        // shorten_vehicle: 0x01;
+        length: 7;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        // track_type: 0;
+        track_type: cape_A;
+        climates_available: ALL_CLIMATES;
+        // is_dual_headed: false;
+        dual_headed: 0;
+        cargo_capacity: 0;
+        // cargo_type: 0x00;
+    }
+    graphics {
+        default: switch_steam_Class15A_position;
+        articulated_part: switch_steam_Class15A_articulated;
+        length: switch_steam_Class15A_length;
+
+        visual_effect_and_powered: switch_steam_Class15A_visual_effect_and_powered;
+        purchase: spriteset_steam_Class15A_purchase;
+        additional_text: string(str_steam_Class15A_add);
+
+        sound_effect: switch_steam_generic_sound;
+    }
+}
+
+
+// Class25C
+
+spriteset(spriteset_steam_Class25C, "sprites.png") {
+    // 171
+    [164, 142, 8, 24, -3, -12]
+    // 172
+    [182, 142, 22, 18, -15, -9]
+    // 173
+    [214, 142, 32, 12, -16, -8]
+    // 174
+    [256, 142, 22, 17, -6, -9]
+    // 175
+    [288, 142, 8, 24, -3, -12]
+    // 176
+    [306, 142, 22, 17, -14, -9]
+    // 177
+    [338, 142, 32, 12, -16, -8]
+    // 178
+    [380, 142, 22, 18, -6, -9]
+}
+
+spriteset(spriteset_steam_Class25C_tender, "sprites.png") {
+    // 179
+    [412, 142, 8, 24, -3, -12]
+    // 17A
+    [430, 142, 22, 18, -15, -9]
+    // 17B
+    [462, 142, 32, 12, -16, -8]
+    // 17C
+    [504, 142, 22, 17, -6, -9]
+    // 17D
+    [536, 142, 8, 24, -3, -12]
+    // 17E
+    [554, 142, 22, 17, -14, -9]
+    // 17F
+    [586, 142, 32, 12, -16, -8]
+    // 180
+    [628, 142, 22, 18, -6, -9]
+}
+
+
+spriteset(spriteset_steam_Class25C_purchase, "sprites.png") {
+    // 185
+    [660, 142, 64, 12, -28, -8]
+}
+
+
+switch (FEAT_TRAINS, SELF, switch_steam_Class25C_articulated, extra_callback_info1) {
+    1: item_steam_Class25C;
+    return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class25C_position, position_in_articulated_veh) {
+    1: spriteset_steam_Class25C_tender;
+    return spriteset_steam_Class25C;
+}
+
+item (FEAT_TRAINS, item_steam_Class25C) {
+    property {
+        name: string(str_steam_Class25C);
+        // from yagl
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1946, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 40;
+        model_life: 20;
+        running_cost_factor: 77;
+        cost_factor: 11;
+        engine_class: ENGINE_CLASS_STEAM;
+        speed: 115 km/h;
+        weight: 235 tons;
+        power: 2500;
+        // coeff_of_tractive_effort: 0x18;
+        tractive_effort_coefficient: 0.094;
+        // miscellaneous_flags: 0x02;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        // shorten_vehicle: 0x00;
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        // track_type: 0;
+        track_type: cape_A;
+        climates_available: ALL_CLIMATES;
+        // is_dual_headed: false;
+        dual_headed: 0;
+        cargo_capacity: 0;
+        visual_effect_and_powered: visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+        // cargo_type: 0x00;
+    }
+    graphics {
+        default: switch_steam_Class25C_position;
+        articulated_part: switch_steam_Class25C_articulated;
+
+        purchase: spriteset_steam_Class25C_purchase;
+        additional_text: string(str_steam_Class25C_add);
+
+        sound_effect: switch_steam_generic_sound;
+    }
+}
+
+// GMAM
+
+spriteset (spriteset_steam_GMAM_middle, "sprites.png") {
+    // 191
+    [734, 142, 8, 24, -3, -16]
+    // 192
+    [752, 142, 22, 18, -13, -10]
+    // 193
+    [10, 176, 32, 12, -12, -8]
+    // 194
+    [52, 176, 24, 17, -5, -8]
+    // 195
+    [86, 176, 8, 24, -3, -11]
+    // 196
+    [104, 176, 24, 17, -17, -8]
+    // 197
+    [138, 176, 32, 12, -21, -8]
+    // 198
+    [180, 176, 22, 18, -8, -10]
+}
+
+spriteset (spriteset_steam_GMAM_tank, "sprites.png") {
+    // 199
+    [212, 176, 8, 17, -3, -12]
+    // 19A
+    [230, 176, 16, 14, -8, -9]
+    // 19B
+    [256, 176, 21, 12, -5, -8]
+    // 19C
+    [287, 176, 16, 14, 0, -6]
+    // 19D
+    [313, 176, 8, 17, -3, -6]
+    // 19E
+    [331, 176, 16, 14, -14, -6]
+    // 19F
+    [357, 176, 21, 12, -17, -8]
+    // 1A0
+    [388, 176, 16, 14, -6, -9]
+}
+
+spriteset (spriteset_steam_GMAM_front, "sprites.png") {
+    // 1A1
+    [414, 176, 8, 22, -3, -12]
+    // 1A2
+    [432, 176, 20, 18, -12, -11]
+    // 1A3
+    [462, 176, 28, 13, -12, -9]
+    // 1A4
+    [500, 176, 20, 18, -4, -10]
+    // 1A5
+    [530, 176, 8, 22, -3, -10]
+    // 1A6
+    [548, 176, 20, 18, -14, -10]
+    // 1A7
+    [578, 176, 28, 13, -17, -9]
+    // 1A8
+    [616, 176, 20, 18, -6, -11]
+}
+
+spriteset (spriteset_steam_GMAM_rear, "sprites.png") {
+    // 1A9
+    [646, 176, 8, 22, -3, -12]
+    // 1AA
+    [664, 176, 20, 18, -12, -11]
+    // 1AB
+    [694, 176, 28, 13, -9, -9]
+    // 1AC
+    [732, 176, 20, 18, -4, -10]
+    // 1AD
+    [762, 176, 8, 22, -3, -10]
+    // 1AE
+    [10, 210, 20, 18, -14, -10]
+    // 1AF
+    [40, 210, 28, 13, -20, -9]
+    // 1B0
+    [78, 210, 20, 18, -6, -11]
+}
+
+spriteset (spriteset_steam_GMAM_purchase, "sprites.png") {
+    // 1BC
+    [108, 210, 76, 12, -28, -8]
+}
+
+
+switch (FEAT_TRAINS, SELF, switch_steam_GMAM_articulated, extra_callback_info1) {
+    1: item_steam_GMAM;
+    2: item_steam_GMAM;
+    3: item_steam_GMAM;
+    return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_GMAM_position, position_in_articulated_veh) {
+    0: spriteset_steam_GMAM_front;
+    2: spriteset_steam_GMAM_rear;
+    3: spriteset_steam_GMAM_tank;
+    return spriteset_steam_GMAM_middle;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_GMAM_length, position_in_articulated_veh) {
+    0..2: return 6;
+    return 5;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_GMAM_visual_effect_and_powered, position_in_articulated_veh) {
+    1: visual_effect_and_powered(VISUAL_EFFECT_STEAM, -3, DISABLE_WAGON_POWER);
+    return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+}
+
+item (FEAT_TRAINS, item_steam_GMAM) {
+    property {
+        name: string(str_steam_GMAM);
+        // from yagl
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1949, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 40;
+        model_life: 20;
+        running_cost_factor: 66;
+        cost_factor: 20;
+        engine_class: ENGINE_CLASS_STEAM;
+        speed: 88 km/h;
+        weight: 227 tons;
+        power: 2860;
+        // coeff_of_tractive_effort: 0x24;
+        tractive_effort_coefficient: 0.141;
+        // miscellaneous_flags: 0x02;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        // shorten_vehicle: 0x01;
+        length: 7;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        // track_type: 0;
+        track_type: cape_A;
+        climates_available: ALL_CLIMATES;
+        // is_dual_headed: false;
+        dual_headed: 0;
+        cargo_capacity: 0;
+        // cargo_type: 0x00;
+    }
+    graphics {
+        default: switch_steam_GMAM_position;
+        articulated_part: switch_steam_GMAM_articulated;
+        length: switch_steam_GMAM_length;
+
+        visual_effect_and_powered: switch_steam_GMAM_visual_effect_and_powered;
+        purchase: spriteset_steam_GMAM_purchase;
+        additional_text: string(str_steam_GMAM_add);
+
+        sound_effect: switch_steam_generic_sound;
+    }
+}
+
+// Red Devil Class26
+
+spriteset (spriteset_steam_Class26, "sprites.png") {
+    // 1C7
+    [194, 210, 8, 24, -3, -12]
+    // 1C8
+    [212, 210, 22, 18, -15, -9]
+    // 1C9
+    [244, 210, 32, 12, -16, -8]
+    // 1CA
+    [286, 210, 22, 17, -6, -9]
+    // 1CB
+    [318, 210, 8, 24, -3, -12]
+    // 1CC
+    [336, 210, 22, 17, -14, -9]
+    // 1CD
+    [368, 210, 32, 12, -16, -8]
+    // 1CE
+    [410, 210, 22, 18, -6, -9]
+}
+
+spriteset (spriteset_steam_Class26_tender, "sprites.png") {
+    // 1CF
+    [442, 210, 8, 22, -3, -12]
+    // 1D0
+    [460, 210, 20, 18, -12, -11]
+    // 1D1
+    [490, 210, 28, 13, -12, -9]
+    // 1D2
+    [528, 210, 20, 18, -4, -10]
+    // 1D3
+    [558, 210, 8, 22, -3, -10]
+    // 1D4
+    [576, 210, 20, 18, -14, -10]
+    // 1D5
+    [606, 210, 28, 13, -16, -9]
+    // 1D6
+    [644, 210, 20, 18, -6, -11]
+}
+
+spriteset (spriteset_steam_Class26_purchase, "sprites.png") {
+    // 1DB
+    [674, 210, 64, 12, -28, -8]
+}
+
+switch (FEAT_TRAINS, SELF, switch_steam_Class26_articulated, extra_callback_info1) {
+    1: item_steam_Class26;
+    return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class26_position, position_in_articulated_veh) {
+    1: spriteset_steam_Class26_tender;
+    return spriteset_steam_Class26;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class26_length, position_in_articulated_veh) {
+    0: return 8;
+    return 6;
+}
+
+switch(FEAT_TRAINS, SELF, switch_steam_Class26_visual_effect_and_powered, (position_in_vehid_chain % 2)) {
+    1: return visual_effect_and_powered(VISUAL_EFFECT_DISABLE, 0, DISABLE_WAGON_POWER);
+    return visual_effect_and_powered(VISUAL_EFFECT_STEAM, -3, DISABLE_WAGON_POWER);
+}
+
+item (FEAT_TRAINS, item_steam_Class26) {
+    property {
+        name: string(str_steam_Class26);
+        // from yagl
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1980, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 40;
+        model_life: 255;
+        running_cost_factor: 88;
+        cost_factor: 36;
+        engine_class: ENGINE_CLASS_STEAM;
+        speed: 120 km/h;
+        weight: 200 tons;
+        power: 3800;
+        // coeff_of_tractive_effort: 0x18;
+        tractive_effort_coefficient: 0.118;
+        // miscellaneous_flags: 0x02;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        // shorten_vehicle: 0x00;
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        // track_type: 0;
+        track_type: cape_A;
+        climates_available: ALL_CLIMATES;
+        // is_dual_headed: false;
+        dual_headed: 0;
+        cargo_capacity: 0;
+        // cargo_type: 0x00;
+    }
+    graphics {
+        default: switch_steam_Class26_position;
+        articulated_part: switch_steam_Class26_articulated;
+        length: switch_steam_Class26_length;
+
+        purchase: spriteset_steam_Class26_purchase;
+        additional_text: string(str_steam_Class26_add);
+        visual_effect_and_powered: switch_steam_Class26_visual_effect_and_powered;
+
+        sound_effect: switch_steam_generic_sound;
+    }
+}
+
+// Diesel
+
+// DE2
+
+spriteset (spriteset_diesel_DE2, "sprites.png") {
+    // 838
+    [621, 1541, 8, 24, -3, -12]
+    // 839
+    [639, 1541, 22, 18, -15, -9]
+    // 83A
+    [671, 1541, 32, 12, -16, -8]
+    // 83B
+    [713, 1541, 22, 17, -6, -9]
+    // 83C
+    [745, 1541, 8, 24, -3, -12]
+    // 83D
+    [763, 1541, 22, 17, -14, -9]
+    // 83E
+    [10, 1575, 32, 12, -16, -8]
+    // 83F
+    [52, 1575, 22, 18, -6, -9]
+}
+
+item (FEAT_TRAINS, item_diesel_DE2) {
+    property {
+        name: string(str_diesel_DE2);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1950, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 18;
+        model_life: 20;
+        running_cost_factor: 39;
+        cost_factor: 36;
+        engine_class: ENGINE_CLASS_DIESEL;
+        speed: 120 km/h;
+        weight: 115 tons;
+        power: 1450;
+        // coeff_of_tractive_effort: 0x30;
+        tractive_effort_coefficient: 0.188;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: cape_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_diesel_DE2;
+        additional_text: string(str_diesel_DE2_add);
+        sound_effect: switch_diesel_1250_sound;
+    }
+}
+
+// RF615E
+
+spriteset (spriteset_diesel_RF615E, "sprites.png") {
+    // 849
+    [84, 1575, 8, 24, -3, -12]
+    // 84A
+    [102, 1575, 22, 18, -15, -9]
+    // 84B
+    [134, 1575, 32, 12, -16, -8]
+    // 84C
+    [176, 1575, 22, 17, -6, -9]
+    // 84D
+    [208, 1575, 8, 24, -3, -12]
+    // 84E
+    [226, 1575, 22, 17, -14, -9]
+    // 84F
+    [258, 1575, 32, 12, -16, -8]
+    // 850
+    [300, 1575, 22, 18, -6, -9]
+}
+
+item (FEAT_TRAINS, item_diesel_RF615E) {
+    property {
+        name: string(str_diesel_RF615E);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1954, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 18;
+        model_life: 20;
+        running_cost_factor: 45;
+        cost_factor: 36;
+        engine_class: ENGINE_CLASS_DIESEL;
+        speed: 120 km/h;
+        weight: 105 tons;
+        power: 1450;
+        // coeff_of_tractive_effort: 0x41;
+        tractive_effort_coefficient: 0.255;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: indian_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_diesel_RF615E;
+        additional_text: string(str_diesel_RF615E_add);
+        sound_effect: switch_diesel_1460_sound;
+    }
+}
+
+// Class44
+
+spriteset (spriteset_diesel_Class44, "sprites.png") {
+    // 85A
+    [332, 1575, 8, 24, -3, -12]
+    // 85B
+    [350, 1575, 22, 18, -15, -9]
+    // 85C
+    [382, 1575, 32, 12, -16, -8]
+    // 85D
+    [424, 1575, 22, 17, -6, -9]
+    // 85E
+    [456, 1575, 8, 24, -3, -12]
+    // 85F
+    [474, 1575, 22, 17, -14, -9]
+    // 860
+    [506, 1575, 32, 12, -16, -8]
+    // 861
+    [548, 1575, 22, 18, -6, -9]
+}
+
+item (FEAT_TRAINS, item_diesel_Class44) {
+    property {
+        name: string(str_diesel_Class44);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1956, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 18;
+        model_life: 20;
+        running_cost_factor: 45;
+        cost_factor: 37;
+        engine_class: ENGINE_CLASS_DIESEL;
+        speed: 130 km/h;
+        weight: 103 tons;
+        power: 1500;
+        // coeff_of_tractive_effort: 0x41;
+        tractive_effort_coefficient: 0.255;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: standard_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_diesel_Class44;
+        additional_text: string(str_diesel_Class44_add);
+        sound_effect: switch_diesel_1460_sound;
+    }
+}
+
+// WDM2
+
+spriteset (spriteset_diesel_WDM2_multiple, "sprites.png") {
+    // 86B
+    [580, 1575, 8, 22, -3, -12]
+    // 86C
+    [598, 1575, 20, 18, -12, -11]
+    // 86D
+    [628, 1575, 28, 13, -12, -9]
+    // 86E
+    [666, 1575, 20, 18, -4, -10]
+    // 86F
+    [696, 1575, 8, 22, -3, -10]
+    // 870
+    [714, 1575, 20, 18, -14, -10]
+    // 871
+    [744, 1575, 28, 13, -16, -9]
+    // 872
+    [10, 1609, 20, 18, -6, -11]
+}
+
+spriteset (spriteset_diesel_WDM2_one, "sprites.png") {
+    // 873
+    [40, 1609, 8, 22, -3, -12]
+    // 874
+    [58, 1609, 20, 18, -12, -11]
+    // 875
+    [88, 1609, 28, 13, -12, -9]
+    // 876
+    [126, 1609, 20, 18, -4, -10]
+    // 877
+    [156, 1609, 8, 22, -3, -10]
+    // 878
+    [174, 1609, 20, 18, -14, -10]
+    // 879
+    [204, 1609, 28, 13, -16, -9]
+    // 87A
+    [242, 1609, 20, 18, -6, -11]
+}
+
+spriteset (spriteset_diesel_WDM2_flipped, "sprites.png") {
+    // 87B
+    [272, 1609, 8, 22, -3, -10]
+    // 87C
+    [290, 1609, 20, 18, -14, -10]
+    // 87D
+    [320, 1609, 28, 13, -16, -9]
+    // 87E
+    [358, 1609, 20, 18, -6, -11]
+    // 87F
+    [388, 1609, 8, 22, -3, -12]
+    // 880
+    [406, 1609, 20, 18, -12, -11]
+    // 881
+    [436, 1609, 28, 13, -12, -9]
+    // 882
+    [474, 1609, 20, 18, -4, -10]
+}
+
+spriteset (spriteset_diesel_WDM2_purchase, "sprites.png") {
+    // 887
+    [504, 1609, 28, 13, -14, -9]
+}
+
+switch (FEAT_TRAINS, SELF, switch_diesel_WDM2_multiple_flipped, vehicle_is_flipped) {
+    1: spriteset_diesel_WDM2_flipped;
+    return spriteset_diesel_WDM2_multiple;
+}
+
+switch (FEAT_TRAINS, SELF, switch_diesel_WDM2_flipped, vehicle_is_flipped) {
+    1: spriteset_diesel_WDM2_flipped;
+    return spriteset_diesel_WDM2_one;
+}
+
+switch (FEAT_TRAINS, SELF, switch_diesel_WDM2_sprite, num_vehs_in_vehid_chain) {
+    1: switch_diesel_WDM2_flipped;
+    switch_diesel_WDM2_multiple_flipped;
+}
+
+item (FEAT_TRAINS, item_diesel_WDM2) {
+    property {
+        name: string(str_diesel_WDM2);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1961, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 18;
+        model_life: 20;
+        running_cost_factor: 55;
+        cost_factor: 27;
+        engine_class: ENGINE_CLASS_DIESEL;
+        speed: 120 km/h;
+        weight: 113 tons;
+        power: 2400;
+        // coeff_of_tractive_effort: 0x46;
+        tractive_effort_coefficient: 0.275;
+        misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_FLIP);
+        length: 7;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: indian_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: switch_diesel_WDM2_sprite;
+        additional_text: string(str_diesel_WDM2_add);
+        sound_effect: switch_diesel_1250_sound;
+        purchase: spriteset_diesel_WDM2_purchase;
+    }
+}
+
+// Century 628
+
+spriteset (spriteset_diesel_Century628, "sprites.png") {
+    // 895
+    [542, 1609, 8, 24, -3, -12]
+    // 896
+    [560, 1609, 22, 18, -14, -9]
+    // 897
+    [592, 1609, 32, 12, -16, -8]
+    // 898
+    [634, 1609, 22, 17, -6, -9]
+    // 899
+    [666, 1609, 8, 24, -3, -12]
+    // 89A
+    [684, 1609, 22, 17, -14, -9]
+    // 89B
+    [716, 1609, 32, 12, -16, -8]
+    // 89C
+    [758, 1609, 22, 18, -6, -9]
+}
+
+item (FEAT_TRAINS, item_diesel_Century628) {
+    property {
+        name: string(str_diesel_Century628);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1964, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 18;
+        model_life: 20;
+        running_cost_factor: 62;
+        cost_factor: 34;
+        engine_class: ENGINE_CLASS_DIESEL;
+        speed: 100 km/h;
+        weight: 176 tons;
+        power: 2800;
+        // coeff_of_tractive_effort: 0x3F;
+        tractive_effort_coefficient: 0.247;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: standard_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_diesel_Century628;
+        additional_text: string(str_diesel_Century628_add);
+        sound_effect: switch_diesel_us_sound;
+    }
+}
+
+// L Class
+
+spriteset (spriteset_diesel_LClass, "sprites.png") {
+    // 8A6
+    [10, 1643, 8, 24, -3, -12]
+    // 8A7
+    [28, 1643, 22, 18, -14, -9]
+    // 8A8
+    [60, 1643, 32, 12, -16, -8]
+    // 8A9
+    [102, 1643, 22, 17, -6, -9]
+    // 8AA
+    [134, 1643, 8, 24, -3, -12]
+    // 8AB
+    [152, 1643, 22, 17, -14, -9]
+    // 8AC
+    [184, 1643, 32, 12, -16, -8]
+    // 8AD
+    [226, 1643, 22, 18, -6, -9]
+}
+
+item (FEAT_TRAINS, item_diesel_LClass) {
+    property {
+        name: string(str_diesel_LClass);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1968, 1, 1);
+        reliability_decay: 20;
+        vehicle_life: 18;
+        model_life: 20;
+        running_cost_factor: 77;
+        cost_factor: 35;
+        engine_class: ENGINE_CLASS_DIESEL;
+        speed: 144 km/h;
+        weight: 137 tons;
+        power: 2550;
+        // coeff_of_tractive_effort: 0x38;
+        tractive_effort_coefficient: 0.22;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: standard_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_diesel_LClass;
+        additional_text: string(str_diesel_LClass_add);
+        sound_effect: switch_diesel_1460_sound;
+    }
+}
+
+// DL Class
+
+spriteset (spriteset_diesel_DLClass, "sprites.png") {
+    // 8C8
+    [506, 1643, 8, 24, -3, -12]
+    // 8C9
+    [524, 1643, 22, 18, -15, -9]
+    // 8CA
+    [556, 1643, 32, 12, -16, -8]
+    // 8CB
+    [598, 1643, 22, 17, -6, -9]
+    // 8CC
+    [630, 1643, 8, 24, -3, -12]
+    // 8CD
+    [648, 1643, 22, 17, -14, -9]
+    // 8CE
+    [680, 1643, 32, 12, -16, -8]
+    // 8CF
+    [722, 1643, 22, 18, -6, -9]
+}
+
+item (FEAT_TRAINS, item_diesel_DLClass) {
+    property {
+        name: string(str_diesel_DLClass);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1989, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 18;
+        model_life: 255;
+        running_cost_factor: 76;
+        cost_factor: 35;
+        engine_class: ENGINE_CLASS_DIESEL;
+        speed: 160 km/h;
+        weight: 118 tons;
+        power: 2800;
+        // coeff_of_tractive_effort: 0x4E;
+        tractive_effort_coefficient: 0.306;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: standard_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_diesel_DLClass;
+        additional_text: string(str_diesel_DLClass_add);
+        sound_effect: switch_diesel_1460_sound;
+    }
+}
+
+// Class 34
+
+spriteset (spriteset_diesel_Class34, "sprites.png") {
+    // 8B7
+    [258, 1643, 8, 24, -3, -12]
+    // 8B8
+    [276, 1643, 22, 18, -14, -9]
+    // 8B9
+    [308, 1643, 32, 12, -16, -8]
+    // 8BA
+    [350, 1643, 22, 17, -6, -9]
+    // 8BB
+    [382, 1643, 8, 24, -3, -12]
+    // 8BC
+    [400, 1643, 22, 17, -14, -9]
+    // 8BD
+    [432, 1643, 32, 12, -16, -8]
+    // 8BE
+    [474, 1643, 22, 18, -6, -9]
+}
+
+item (FEAT_TRAINS, item_diesel_Class34) {
+    property {
+        name: string(str_diesel_Class34);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1972, 1, 17);
+        reliability_decay: 20;
+        vehicle_life: 18;
+        model_life: 20;
+        running_cost_factor: 55;
+        cost_factor: 23;
+        engine_class: ENGINE_CLASS_DIESEL;
+        speed: 100 km/h;
+        weight: 112 tons;
+        power: 2400;
+        // coeff_of_tractive_effort: 0x4E;
+        tractive_effort_coefficient: 0.255;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: cape_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_diesel_Class34;
+        additional_text: string(str_diesel_Class34_add);
+        sound_effect: switch_diesel_1460_sound;
+    }
+}
+
+// BB409W
+
+spriteset (spriteset_diesel_BB409W, "sprites.png") {
+    // 8D9
+    [754, 1643, 8, 24, -3, -12]
+    // 8DA
+    [10, 1677, 22, 18, -14, -9]
+    // 8DB
+    [42, 1677, 32, 12, -16, -8]
+    // 8DC
+    [84, 1677, 22, 18, -6, -10]
+    // 8DD
+    [116, 1677, 8, 24, -3, -12]
+    // 8DE
+    [134, 1677, 22, 18, -14, -10]
+    // 8DF
+    [166, 1677, 32, 12, -16, -8]
+    // 8E0
+    [208, 1677, 22, 18, -6, -9]
+}
+
+item (FEAT_TRAINS, item_diesel_BB409W) {
+    property {
+        name: string(str_diesel_BB409W);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1992, 1, 1);
+        reliability_decay: 20;
+        vehicle_life: 18;
+        model_life: 255;
+        running_cost_factor: 81;
+        cost_factor: 36;
+        engine_class: ENGINE_CLASS_DIESEL;
+        speed: 100 km/h;
+        weight: 162 tons;
+        power: 4000;
+        // coeff_of_tractive_effort: 0x4E;
+        tractive_effort_coefficient: 0.255;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: meter_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_diesel_BB409W;
+        additional_text: string(str_diesel_BB409W_add);
+        sound_effect: switch_diesel_us_sound;
+    }
+}
+
+// DE43CAC
+
+spriteset (spriteset_diesel_DE43CAC, "sprites.png") {
+    // 8EA
+    [240, 1677, 8, 24, -3, -12]
+    // 8EB
+    [258, 1677, 22, 18, -15, -9]
+    // 8EC
+    [290, 1677, 32, 12, -16, -8]
+    // 8ED
+    [332, 1677, 22, 17, -6, -9]
+    // 8EE
+    [364, 1677, 8, 24, -3, -12]
+    // 8EF
+    [382, 1677, 22, 17, -14, -9]
+    // 8F0
+    [414, 1677, 32, 12, -16, -8]
+    // 8F1
+    [456, 1677, 22, 18, -6, -9]
+}
+
+item (FEAT_TRAINS, item_diesel_DE43CAC) {
+    property {
+        name: string(str_diesel_DE43CAC);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(2001, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 18;
+        model_life: 255;
+        running_cost_factor: 94;
+        cost_factor: 35;
+        engine_class: ENGINE_CLASS_DIESEL;
+        speed: 150 km/h;
+        weight: 120 tons;
+        power: 3200;
+        // coeff_of_tractive_effort: 0x53;
+        tractive_effort_coefficient: 0.325;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: standard_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_diesel_DE43CAC;
+        additional_text: string(str_diesel_DE43CAC_add);
+        sound_effect: switch_diesel_us_sound;
+    }
+}
+
+// FQClass
+
+spriteset (spriteset_diesel_FQClass, "sprites.png") {
+    // 8FB
+    [488, 1677, 8, 24, -3, -12]
+    // 8FC
+    [506, 1677, 22, 18, -14, -9]
+    // 8FD
+    [538, 1677, 32, 12, -16, -8]
+    // 8FE
+    [580, 1677, 22, 17, -6, -9]
+    // 8FF
+    [612, 1677, 8, 24, -3, -12]
+    // 900
+    [630, 1677, 22, 17, -14, -9]
+    // 901
+    [662, 1677, 32, 12, -16, -8]
+    // 902
+    [704, 1677, 22, 18, -6, -9]
+}
+
+item (FEAT_TRAINS, item_diesel_FQClass) {
+    property {
+        name: string(str_diesel_FQClass);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(2002, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 18;
+        model_life: 255;
+        running_cost_factor: 81;
+        cost_factor: 33;
+        engine_class: ENGINE_CLASS_DIESEL;
+        speed: 115 km/h;
+        weight: 134 tons;
+        power: 3500;
+        // coeff_of_tractive_effort: 0x4F;
+        tractive_effort_coefficient: 0.31;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: standard_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_diesel_FQClass;
+        additional_text: string(str_diesel_FQClass_add);
+        sound_effect: switch_diesel_us_sound;
+    }
+}
+
+// RMd55
+
+spriteset (spriteset_diesel_RMd55, "sprites.png") {
+    // A0D
+    [254, 1879, 8, 16, -3, -9]
+    // A0E
+    [272, 1879, 16, 12, -9, -6]
+    // A0F
+    [298, 1879, 24, 10, -8, -6]
+    // A10
+    [332, 1879, 17, 14, 1, -4]
+    // A11
+    [359, 1879, 8, 16, -3, -9]
+    // A12
+    [377, 1879, 17, 14, -16, -4]
+    // A13
+    [404, 1879, 24, 10, -16, -6]
+    // A14
+    [438, 1879, 16, 12, -5, -6]
+}
+
+spriteset (spriteset_diesel_RMd55_pt2, "sprites.png") {
+    // A15
+    [464, 1879, 8, 17, -3, -10]
+    // A16
+    [482, 1879, 16, 13, -9, -7]
+    // A17
+    [508, 1879, 23, 10, -7, -6]
+    // A18
+    [541, 1879, 17, 13, 0, -4]
+    // A19
+    [568, 1879, 8, 17, -3, -8]
+    // A1A
+    [586, 1879, 17, 13, -15, -4]
+    // A1B
+    [613, 1879, 23, 10, -16, -6]
+    // A1C
+    [646, 1879, 16, 13, -5, -7]
+}
+
+spriteset (spriteset_diesel_RMd55_purchase, "sprites.png") {
+    // A91
+    [83, 2011, 47, 10, -24, -6]
+}
+
+switch(FEAT_TRAINS, SELF, switch_diesel_RMd55_position, (position_in_vehid_chain % 2)) {
+    1: spriteset_diesel_RMd55_pt2;
+    return spriteset_diesel_RMd55;
+}
+
+switch (FEAT_TRAINS, SELF, switch_diesel_RMd55_articulated, extra_callback_info1) {
+    1: return item_diesel_RMd55;
+    return CB_RESULT_NO_MORE_ARTICULATED_PARTS;
+}
+
+item (FEAT_TRAINS, item_diesel_RMd55) {
+    property {
+        name: string(str_diesel_RMd55);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1931, 1, 1);
+        reliability_decay: 20;
+        vehicle_life: 21;
+        model_life: 20;
+        running_cost_factor: 7;
+        cost_factor: 2;
+        engine_class: ENGINE_CLASS_DIESEL; 
+        speed: 80 km/h;
+        weight: 18 tons;
+        power: 150;
+        // coeff_of_tractive_effort: 0x2A;
+        tractive_effort_coefficient: 0.164;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        // shorten_vehicle: 0x02;
+        length: 6;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: cape_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 27;
+        refittable_cargo_classes: CC_PASSENGERS;
+        default_cargo_type: PASS;
+
+    }
+    graphics {
+        default: switch_diesel_RMd55_position;
+        articulated_part: switch_diesel_RMd55_articulated;
+        purchase: spriteset_diesel_RMd55_purchase;
+
+        additional_text: string(str_diesel_RMd55_add);
+        sound_effect: switch_diesel_1250_sound;
+    }
+}
+
+
+// DDM45
+
+spriteset (spriteset_diesel_DDM45, "sprites.png") {
+    // A35
+    [618, 1912, 8, 21, -3, -11]
+    // A36
+    [636, 1912, 22, 16, -14, -8]
+    // A37
+    [668, 1912, 31, 12, -16, -8]
+    // A38
+    [709, 1912, 22, 16, -6, -8]
+    // A39
+    [741, 1912, 8, 23, -3, -12]
+    // A3A
+    [759, 1912, 22, 16, -14, -8]
+    // A3B
+    [10, 1945, 31, 12, -16, -8]
+    // A3C
+    [51, 1945, 22, 16, -6, -8]
+}
+
+item (FEAT_TRAINS, item_diesel_DDM45) {
+    property {
+        name: string(str_diesel_DDM45);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1976, 1, 1);
+        vehicle_life: 21;
+        model_life: 20;
+        running_cost_factor: 83;
+        cost_factor: 35;
+        engine_class: ENGINE_CLASS_DIESEL;
+        speed: 112 km/h;
+        weight: 129 tons;
+        power: 3600;
+        // coeff_of_tractive_effort: 0x4F;
+        tractive_effort_coefficient: 0.306;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: meter_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_diesel_DDM45;
+        additional_text: string(str_diesel_DDM45_add);
+        sound_effect: switch_diesel_us_sound;
+    }
+}
+
+// // Record #1014
+// feature_graphics<Trains> // Action03
+// {
+//     livery_override: false;
+//     default_set_id: 0x004A;
+//     feature_ids: [ 0x0040 ];
+//     cargo_types:
+//     {
+//         // <cargo_type>: <cargo_id>;
+//         0xFF: 0x0038;
+//     };
+// }
+
+// BL CLASS
+
+spriteset (spriteset_diesel_BLClass, "sprites.png") {
+    // A05
+    [10, 1879, 8, 23, -3, -12]
+    // A06
+    [28, 1879, 21, 16, -14, -8]
+    // A07
+    [59, 1879, 32, 12, -16, -8]
+    // A08
+    [101, 1879, 21, 16, -5, -8]
+    // A09
+    [132, 1879, 8, 23, -3, -12]
+    // A0A
+    [150, 1879, 21, 16, -14, -8]
+    // A0B
+    [181, 1879, 32, 12, -17, -8]
+    // A0C
+    [223, 1879, 21, 16, -5, -8]
+}
+
+item (FEAT_TRAINS, item_diesel_BLClass) {
+    property {
+        name: string(str_diesel_BLClass);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1989, 1, 1);
+        vehicle_life: 21;
+        model_life: 21;
+        running_cost_factor: 78;
+        cost_factor: 27;
+        engine_class: ENGINE_CLASS_DIESEL;
+        speed: 115 km/h;
+        weight: 129 tons;
+        power: 3500;
+        // coeff_of_tractive_effort: 0x4F;
+        tractive_effort_coefficient: 0.306;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        // TODO: Can also be Irish gauge
+        track_type: standard_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_diesel_BLClass;
+        additional_text: string(str_diesel_BLClass_add);
+        sound_effect: switch_diesel_1460_sound;
+    }
+}
+
+
+// // Record #1008
+// feature_graphics<Trains> // Action03
+// {
+//     livery_override: false;
+//     default_set_id: 0x0047; -> sound, autoreplace,
+//     feature_ids: [ 0x003D ];
+//     cargo_types:
+//     {
+//         // <cargo_type>: <cargo_id>;
+//         0xFF: 0x0035; -> Description
+//     };
+// }
+
+// Electric
+
+// WCM-1
+
+spriteset (spriteset_electric_WCM1, "sprites.png") {
+    // 90C
+    [736, 1677, 8, 24, -3, -12]
+    // 90D
+    [754, 1677, 23, 20, -15, -12]
+    // 90E
+    [10, 1711, 32, 15, -16, -11]
+    // 90F
+    [52, 1711, 22, 20, -6, -12]
+    // 910
+    [84, 1711, 8, 24, -3, -12]
+    // 911
+    [102, 1711, 22, 20, -14, -12]
+    // 912
+    [134, 1711, 32, 15, -16, -11]
+    // 913
+    [176, 1711, 23, 20, -6, -12]
+}
+
+item (FEAT_TRAINS, item_electric_WCM1) {
+    property {
+        name: string(str_electric_WCM1);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1956, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 25;
+        model_life: 20;
+        running_cost_factor: 63;
+        cost_factor: 47;
+        engine_class: ENGINE_CLASS_ELECTRIC;
+        speed: 105 km/h;
+        weight: 124 tons;
+        power: 3700;
+        // coeff_of_tractive_effort: 0x41;
+        tractive_effort_coefficient: 0.255;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: dc_1500v_indian_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_electric_WCM1;
+        additional_text: string(str_electric_WCM1_add);
+        sound_effect: switch_diesel_1250_sound;
+    }
+}
+
+// WAM-1
+
+spriteset (spriteset_electric_WAM1, "sprites.png") {
+    // 91D
+    [209, 1711, 8, 24, -3, -14]
+    // 91E
+    [227, 1711, 20, 20, -12, -13]
+    // 91F
+    [257, 1711, 28, 15, -12, -11]
+    // 920
+    [295, 1711, 20, 20, -4, -12]
+    // 921
+    [325, 1711, 8, 24, -3, -12]
+    // 922
+    [343, 1711, 20, 20, -14, -12]
+    // 923
+    [373, 1711, 28, 15, -16, -11]
+    // 924
+    [411, 1711, 20, 20, -6, -13]
+}
+
+spriteset (spriteset_electric_WAM1_flipped, "sprites.png") {
+    // 925
+    [441, 1711, 8, 24, -3, -12]
+    // 926
+    [459, 1711, 20, 20, -14, -12]
+    // 927
+    [489, 1711, 28, 15, -16, -11]
+    // 928
+    [527, 1711, 20, 20, -6, -13]
+    // 929
+    [557, 1711, 8, 24, -3, -14]
+    // 92A
+    [575, 1711, 20, 20, -12, -13]
+    // 92B
+    [605, 1711, 28, 15, -12, -11]
+    // 92C
+    [643, 1711, 20, 20, -4, -12]
+}
+
+spriteset (spriteset_electric_WAM1_purchase, "sprites.png") {
+    // 930
+    [673, 1711, 28, 15, -14, -11]
+}
+
+switch (FEAT_TRAINS, SELF, switch_electric_WAM1_flipped, vehicle_is_flipped) {
+    1: spriteset_electric_WAM1_flipped;
+    return spriteset_electric_WAM1;
+}
+
+item (FEAT_TRAINS, item_electric_WAM1) {
+    property {
+        name: string(str_electric_WAM1);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1960, 1, 1);
+        reliability_decay: 20;
+        vehicle_life: 25;
+        model_life: 20;
+        running_cost_factor: 60;
+        cost_factor: 34;
+        engine_class: ENGINE_CLASS_ELECTRIC;
+        speed: 130 km/h;
+        weight: 75 tons;
+        power: 2800;
+        // coeff_of_tractive_effort: 0x4C;
+        tractive_effort_coefficient: 0.298;
+        misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_FLIP);
+        length: 7;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: ac_25kv_indian_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: switch_electric_WAM1_flipped;
+        additional_text: string(str_electric_WAM1_add);
+        sound_effect: switch_diesel_1460_sound;
+        purchase: spriteset_electric_WAM1_purchase;
+    }
+}
+
+// Class 6E
+
+spriteset (spriteset_electric_Class6E, "sprites.png") {
+    // 93C
+    [711, 1711, 8, 24, -3, -14]
+    // 93D
+    [729, 1711, 20, 20, -12, -13]
+    // 93E
+    [759, 1711, 28, 15, -12, -11]
+    // 93F
+    [10, 1745, 20, 20, -4, -12]
+    // 940
+    [40, 1745, 8, 24, -3, -12]
+    // 941
+    [58, 1745, 20, 20, -14, -12]
+    // 942
+    [88, 1745, 28, 15, -16, -11]
+    // 943
+    [126, 1745, 20, 20, -6, -13]
+}
+
+spriteset (spriteset_electric_Class6E_flipped, "sprites.png") {
+    // 944
+    [156, 1745, 8, 24, -3, -12]
+    // 945
+    [174, 1745, 20, 20, -14, -12]
+    // 946
+    [204, 1745, 28, 15, -16, -11]
+    // 947
+    [242, 1745, 20, 20, -6, -13]
+    // 948
+    [272, 1745, 8, 24, -3, -14]
+    // 949
+    [290, 1745, 20, 20, -12, -13]
+    // 94A
+    [320, 1745, 28, 15, -12, -11]
+    // 94B
+    [358, 1745, 20, 20, -4, -12]
+}
+
+spriteset (spriteset_electric_Class6E_purchase, "sprites.png") {
+    // 94F
+    [388, 1745, 28, 15, -14, -11]
+}
+
+switch (FEAT_TRAINS, SELF, switch_electric_Class6E_flipped, vehicle_is_flipped) {
+    1: spriteset_electric_Class6E_flipped;
+    return spriteset_electric_Class6E;
+}
+
+item (FEAT_TRAINS, item_electric_Class6E) {
+    property {
+        name: string(str_electric_Class6E);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1968, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 25;
+        model_life: 20;
+        running_cost_factor: 61;
+        cost_factor: 23;
+        engine_class: ENGINE_CLASS_ELECTRIC;
+        speed: 120 km/h;
+        weight: 81 tons;
+        power: 3300;
+        // coeff_of_tractive_effort: 0x41;
+        tractive_effort_coefficient: 0.255;
+        misc_flags: bitmask(TRAIN_FLAG_2CC, TRAIN_FLAG_FLIP);
+        length: 7;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: dc_3kv_cape_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: switch_electric_Class6E_flipped;
+        additional_text: string(str_electric_Class6E_add);
+        sound_effect: switch_diesel_1250_sound;
+        purchase: spriteset_electric_Class6E_purchase;
+    }
+}
+
+// WAM-4
+
+spriteset (spriteset_electric_WAM4, "sprites.png") {
+    // 95B
+    [426, 1745, 8, 24, -3, -12]
+    // 95C
+    [444, 1745, 23, 20, -15, -12]
+    // 95D
+    [477, 1745, 32, 15, -16, -11]
+    // 95E
+    [519, 1745, 22, 20, -6, -12]
+    // 95F
+    [551, 1745, 8, 24, -3, -12]
+    // 960
+    [569, 1745, 22, 20, -14, -12]
+    // 961
+    [601, 1745, 32, 15, -16, -11]
+    // 962
+    [643, 1745, 23, 20, -6, -12]
+}
+
+item (FEAT_TRAINS, item_electric_WAM4) {
+    property {
+        name: string(str_electric_WAM4);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1973, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 25;
+        model_life: 20;
+        running_cost_factor: 61;
+        cost_factor: 30;
+        engine_class: ENGINE_CLASS_ELECTRIC;
+        speed: 100 km/h;
+        weight: 118 tons;
+        power: 3850;
+        // coeff_of_tractive_effort: 0x4A;
+        tractive_effort_coefficient: 0.29;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: ac_25kv_indian_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_electric_WAM4;
+        additional_text: string(str_electric_WAM4_add);
+        sound_effect: switch_diesel_1460_sound;
+    }
+}
+
+// Class 1100
+
+spriteset (spriteset_electric_Class1100, "sprites.png") {
+    // 96C
+    [676, 1745, 8, 24, -3, -12]
+    // 96D
+    [694, 1745, 23, 20, -15, -12]
+    // 96E
+    [727, 1745, 32, 15, -16, -11]
+    // 96F
+    [10, 1779, 22, 20, -6, -12]
+    // 970
+    [42, 1779, 8, 24, -3, -12]
+    // 971
+    [60, 1779, 22, 20, -14, -12]
+    // 972
+    [92, 1779, 32, 15, -16, -11]
+    // 973
+    [134, 1779, 23, 20, -6, -12]
+}
+
+item (FEAT_TRAINS, item_electric_Class1100) {
+    property {
+        name: string(str_electric_Class1100);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1977, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 25;
+        model_life: 20;
+        running_cost_factor: 73;
+        cost_factor: 35;
+        engine_class: ENGINE_CLASS_ELECTRIC;
+        speed: 120 km/h;
+        weight: 120 tons;
+        power: 4000;
+        // coeff_of_tractive_effort: 0x4E;
+        tractive_effort_coefficient: 0.306;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: dc_3kv_standard_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_electric_Class1100;
+        additional_text: string(str_electric_Class1100_add);
+        sound_effect: switch_diesel_us_sound;
+    }
+}
+
+
+// Class 9E
+
+spriteset (spriteset_electric_Class9E, "sprites.png") {
+    // 97D
+    [167, 1779, 8, 24, -3, -12]
+    // 97E
+    [185, 1779, 22, 20, -14, -12]
+    // 97F
+    [217, 1779, 32, 15, -16, -11]
+    // 980
+    [259, 1779, 23, 20, -6, -12]
+    // 981
+    [292, 1779, 8, 24, -3, -12]
+    // 982
+    [310, 1779, 23, 20, -15, -12]
+    // 983
+    [343, 1779, 32, 15, -16, -11]
+    // 984
+    [385, 1779, 22, 20, -6, -12]
+}
+
+item (FEAT_TRAINS, item_electric_Class9E) {
+    property {
+        name: string(str_electric_Class9E);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1977, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 25;
+        model_life: 255;
+        running_cost_factor: 82;
+        cost_factor: 44;
+        engine_class: ENGINE_CLASS_ELECTRIC;
+        speed: 100 km/h;
+        weight: 168 tons;
+        power: 5460;
+        // coeff_of_tractive_effort: 0x4E;
+        tractive_effort_coefficient: 0.306;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: ac_50kv_cape_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_electric_Class9E;
+        additional_text: string(str_electric_Class9E_add);
+        sound_effect: switch_diesel_us_sound;
+    }
+}
+
+// Class 10E
+item (FEAT_TRAINS, item_electric_Class10E) {
+    property {
+        name: string(str_electric_Class10E);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1984, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 25;
+        model_life: 255;
+        running_cost_factor: 66;
+        cost_factor: 33;
+        engine_class: ENGINE_CLASS_ELECTRIC;
+        speed: 100 km/h;
+        weight: 124 tons;
+        power: 4400;
+        // coeff_of_tractive_effort: 0x4E;
+        tractive_effort_coefficient: 0.306;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: dc_3kv_cape_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_electric_Class10E;
+        additional_text: string(str_electric_Class10E_add);
+        sound_effect: switch_diesel_us_sound;
+    }
+}
+
+spriteset (spriteset_electric_Class10E, "sprites.png") {
+    // 98D
+    [417, 1779, 8, 24, -3, -12]
+    // 98E
+    [435, 1779, 23, 20, -15, -12]
+    // 98F
+    [468, 1779, 32, 15, -16, -11]
+    // 990
+    [510, 1779, 22, 20, -6, -12]
+    // 991
+    [542, 1779, 8, 24, -3, -12]
+    // 992
+    [560, 1779, 22, 20, -14, -12]
+    // 993
+    [592, 1779, 32, 15, -16, -11]
+    // 994
+    [634, 1779, 23, 20, -6, -12]
+}
+
+
+// WAP-4
+
+spriteset (spriteset_electric_WAP4, "sprites.png") {
+    // 99E
+    [667, 1779, 8, 24, -3, -12]
+    // 99F
+    [685, 1779, 23, 20, -15, -12]
+    // 9A0
+    [718, 1779, 32, 15, -16, -11]
+    // 9A1
+    [760, 1779, 22, 20, -6, -12]
+    // 9A2
+    [10, 1813, 8, 24, -3, -12]
+    // 9A3
+    [28, 1813, 22, 20, -14, -12]
+    // 9A4
+    [60, 1813, 32, 15, -16, -11]
+    // 9A5
+    [102, 1813, 23, 20, -6, -12]
+}
+
+item (FEAT_TRAINS, item_electric_WAP4) {
+    property {
+        name: string(str_electric_WAP4);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1993, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 25;
+        model_life: 255;
+        running_cost_factor: 92;
+        cost_factor: 24;
+        engine_class: ENGINE_CLASS_ELECTRIC;
+        speed: 140 km/h;
+        weight: 113 tons;
+        power: 5000;
+        // coeff_of_tractive_effort: 0x46;
+        tractive_effort_coefficient: 0.275;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: ac_25kv_indian_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_electric_WAP4;
+        additional_text: string(str_electric_WAP4_add);
+        sound_effect: switch_diesel_us_sound;
+    }
+}
+
+// WAG-6C
+
+spriteset (spriteset_electric_WAG6C, "sprites.png") {
+    // 9AF
+    [135, 1813, 8, 24, -3, -12]
+    // 9B0
+    [153, 1813, 23, 20, -15, -12]
+    // 9B1
+    [186, 1813, 32, 15, -16, -11]
+    // 9B2
+    [228, 1813, 22, 20, -6, -12]
+    // 9B3
+    [260, 1813, 8, 24, -3, -12]
+    // 9B4
+    [278, 1813, 22, 20, -14, -12]
+    // 9B5
+    [310, 1813, 32, 15, -16, -11]
+    // 9B6
+    [352, 1813, 23, 20, -6, -12]
+}
+
+item (FEAT_TRAINS, item_electric_WAG6C) {
+    property {
+        name: string(str_electric_WAG6C);
+
+        sprite_id: SPRITE_ID_NEW_TRAIN;
+        introduction_date: date(1997, 12, 31);
+        reliability_decay: 20;
+        vehicle_life: 25;
+        model_life: 255;
+        running_cost_factor: 79;
+        cost_factor: 37;
+        engine_class: ENGINE_CLASS_ELECTRIC;
+        speed: 100 km/h;
+        weight: 123 tons;
+        power: 6110;
+        // coeff_of_tractive_effort: 0x46;
+        tractive_effort_coefficient: 0.367;
+        misc_flags: bitmask(TRAIN_FLAG_2CC);
+        length: 8;
+        // running_cost_base: 0x00004C36;
+        running_cost_base: RUNNING_COST_DIESEL;
+        track_type: ac_25kv_indian_A;
+        climates_available: ALL_CLIMATES;
+        dual_headed: 0;
+        cargo_capacity: 0;
+    }
+    graphics {
+        default: spriteset_electric_WAG6C;
+        additional_text: string(str_electric_WAG6C_add);
+        sound_effect: switch_diesel_us_sound;
+    }
+}
+
